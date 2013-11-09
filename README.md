@@ -22,12 +22,12 @@ Sí todo salio bien la aplicación deberia estar andando en en la siguiente ruta
 Equipo
 ======
 
-Alejandro Di Meglio
-Adrian Pinto
-Diego Peralta
-Diego Tripodi
-Elena Brizuela
-Fernando Ruiz
-Gerardo Gera
-Jorge Lerche
+- Alejandro Di Meglio
+- Adrian Pinto
+- Diego Peralta
+- Diego Tripodi
+- Elena Brizuela
+- Fernando Ruiz
+- Gerardo Gera
+- Jorge Lerche
 
