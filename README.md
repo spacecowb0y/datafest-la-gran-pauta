@@ -3,6 +3,13 @@ Datafest: La gran propuesta
 
 Datos publicados por la Jefatura de Gabinete de Ministros sobre la inversión en publicidad oficial por proveedor y tipo de medio. Información desde Diciembre de 2008, estructurada por razón social, tipo de medio y total general.
 
+Requerimientos
+==============
+
+- Ruby 1.9.3
+- MySQL
+
+
 Instrucciones
 =============
 
