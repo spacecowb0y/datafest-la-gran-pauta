@@ -30,7 +30,7 @@ Equipo
 ======
 
 - Alejandro Di Meglio
-- Adrian Pinto
+- Adrian Pino
 - Diego Peralta
 - Diego Tripodi
 - Elena Brizuela
