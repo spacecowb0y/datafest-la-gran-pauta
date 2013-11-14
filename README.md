@@ -29,8 +29,8 @@ Sí todo salio bien la aplicación deberia estar andando en en la siguiente ruta
 Equipo
 ======
 
-- Alejandro Di Meglio
 - Adrian Pino
+- Alejandro Di Meglio
 - Diego Peralta
 - Diego Tripodi
 - Elena Brizuela
