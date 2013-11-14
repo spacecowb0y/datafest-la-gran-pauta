@@ -74,7 +74,7 @@
 
       <div class="jumbotron">
         <h2>Gasto Nacional en Pauta Oficial</h2>
-        <p class="lead">Datos publicados por la <strong>Jefatura de Gabinete de Ministros</strong> sobre la inversión en publicidad oficial por proveedor y tipo de medio. Información desde Diciembre de 2008, estructurada por razón social, tipo de medio y total general.</p>
+        <p class="lead">Datos publicados por la <strong>Jefatura de Gabinete de Ministros</strong> sobre la inversión en publicidad oficial por proveedor y tipo de medio. Información desde Enero de 2001 hasta Diciembre de 2008, estructurada por razón social, tipo de medio y total general.</p>
       </div>
     
       <div class="row">
@@ -157,7 +157,7 @@
                     </div>
                     <div class="modal-body">
                       <h4>Evolucion del monto por año</h4>
-                      <%= line_chart [{ name: medio, data: @registros.where(razon_social: medio).group_by_year(:periodo).sum(:monto)  }] %>
+                      <%= line_chart [{ name: medio, data: @registros.where(razon_social: medio).group_by_year(:periodo).sum(:monto) }] %>
                     </div>
                     <div class="modal-footer">
                       <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
@@ -213,9 +213,9 @@
     <script type="text/javascript" src="/js/bootstrap-datepicker.js"></script>
     <script type="text/javascript">
       $('#datepicker').datepicker({
-        format: "mm-dd-yyyy",
+        format: "dd-mm-yyyy",
         startDate: "01-01-2000",
-        endDate: "12-01-2008",
+        endDate: "31-12-2008",
         startView: 1,
         minViewMode: 1,
         calendarWeeks: true
