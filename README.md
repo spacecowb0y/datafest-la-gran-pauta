@@ -13,18 +13,21 @@ Requerimientos
 Instrucciones
 =============
 
-Un vez que bajas el repo, hay que configurar el archivo `config/database.yml`. 
+Un vez que bajas el repo, tenes que crear una base de datos con el nombre `datafest_medios` e importar el dump que se encuentra en `public/dataset.sql`.
+
 Luego desde la terminal, dentro del directorio donde esta la aplicación hay que ejecutar esta serie de comandos:
 
 ~~~ bash
 $ bundle install
-$ rake db:migrate
 $ ruby app.rb
 ~~~
 
-Sí todo salio bien la aplicación deberia estar andando en en la siguiente ruta: http://0.0.0.0:4567
+Sí todo salio bien, la aplicación deberia estar andando en en la siguiente ruta: http://0.0.0.0:4567
 
 ![preview](http://cl.ly/image/2e0l2C0A431Y/datafest_preview.png)
+
+La aplicación usa *activerecord* como ORM que es compatible con: *postgresql*, *mysql* y *sqlite*. En caso que quieras cambiar el motor de la base datos tenes que configurar el archivo `config/database.yml`.
+
 
 Equipo
 ======
