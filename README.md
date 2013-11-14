@@ -24,7 +24,7 @@ $ ruby app.rb
 
 Sí todo salio bien la aplicación deberia estar andando en en la siguiente ruta: http://0.0.0.0:4567
 
-![preview](http://cl.ly/image/3V1y2J453a3X/datafest_la_gran_pauta_preview.png)
+![preview](http://cl.ly/image/2e0l2C0A431Y/datafest_preview.png)
 
 Equipo
 ======
