@@ -49,19 +49,19 @@
             </div>
           </form>
           <ul class="nav navbar-nav navbar-right">
-            <li class="active"><a href="#">Inicio</a></li>
-            <li><a href="#about">Entidades</a></li>
+            <li class="active"><a href="/">Inicio</a></li>
+            <li><a href="/entidades">Entidades</a></li>
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">Sobre la aplicacion <b class="caret"></b></a>
               <ul class="dropdown-menu">
                 <li class="dropdown-header">Miembros del equipo</li>
-                <li><a href="#">Diego Peralta</a></li>
+                <li><a href="#">Adrian Pino</a></li>
                 <li><a href="#">Alejandro Di Meglio</a></li>
-                <li><a href="#">Gerardo Gera</a></li>
+                <li><a href="#">Diego Peralta</a></li>
+                <li><a href="#">Diego Tripodi</a></li>
                 <li><a href="#">Elena Brizuela</a></li>
                 <li><a href="#">Fernando Ruiz</a></li>
-                <li><a href="#">Adrian Pinto</a></li>
-                <li><a href="#">Diego Tripodi</a></li>
+                <li><a href="#">Gerardo Gera</a></li>
                 <li><a href="#">Jorge Lerche</a></li>
               </ul>
             </li>
@@ -86,28 +86,28 @@
           <div class="col-lg-3">
             <div class="well well-small text-center">
               <small class="text-muted">TOTAL GASTADO</small>
-              <h3><%= number_to_currency @medios.sum(:monto).to_i, precision: 1, delimiter: '.', strip_insignificant_zeros: true  %></h3>
+              <h3><%= number_to_currency @registros.sum(:monto).to_i, precision: 1, delimiter: '.', strip_insignificant_zeros: true  %></h3>
             </div>
           </div>
           <div class="col-lg-3">
             <div class="well well-small text-center">
               <small class="text-muted">TOTAL DE ENTIDADES</small>
-              <h3><%= @medios.pluck("DISTINCT razon_social").count %></h3>
+              <h3><%= @registros.pluck("DISTINCT razon_social").count %></h3>
             </div>
           </div>
           <div class="col-lg-3">
             <div class="well well-small text-center">
               <small class="text-muted">RUBRO MAYOR BENEFICIADO</small>
-              <h3><%= @medios.group('medio').sum(:monto, order: 'SUM(monto) DESC').first.first %></h3>
+              <h3><%= @registros.group('medio').sum(:monto, order: 'SUM(monto) DESC').first.first %></h3>
             </div>
           </div>
           <div class="col-lg-3">
             <div class="well well-small text-center">
               <small class="text-muted">ENTIDAD MAYOR BENEFICIADA</small>
               <h3>
-                <%= @medios.group('razon_social').sum(:monto, order: 'SUM(monto) DESC').first.first %> 
+                <%= @registros.group('razon_social').sum(:monto, order: 'SUM(monto) DESC').first.first %> 
                 <small class="text-muted">
-                  ($<%= number_to_human @medios.group('razon_social').sum(:monto, order: 'SUM(monto) DESC').first.last.to_i, units: {million: 'M'} %>)
+                  ($<%= number_to_human @registros.group('razon_social').sum(:monto, order: 'SUM(monto) DESC').first.last.to_i, units: {million: 'M'} %>)
                 </small>
               </h3>
             </div>
@@ -117,26 +117,21 @@
       </div>
 
       <div class="row">
-        <div class="col-lg-7">
+        <div class="col-lg-12">
           <div class="page-header">
             <h3>Evolucion del gasto por tipo pauta</h3>
           </div>
+
           <%= line_chart [
-            { name: 'Television', data: @medios.where(medio: 'television').group_by_year(:periodo).count },
-            { name: 'Radio', data: @medios.where(medio: 'radio').group_by_year(:periodo).count },
-            { name: 'Grafica', data: @medios.where(medio: 'grafica').group_by_year(:periodo).count },
-            { name: 'Web', data: @medios.where(medio: 'web').group_by_year(:periodo).count },
-            { name: 'Via Publica', data: @medios.where(medio: 'via publica').group_by_year(:periodo).count }
+            { name: 'Television',  data: @registros.where(medio: 'television').group_by_year(:periodo).sum(:monto)  },
+            { name: 'Radio',       data: @registros.where(medio: 'radio').group_by_year(:periodo).sum(:monto)      },
+            { name: 'Grafica',     data: @registros.where(medio: 'grafica').group_by_year(:periodo).sum(:monto)    },
+            { name: 'Web',         data: @registros.where(medio: 'web').group_by_year(:periodo).sum(:monto)        },
+            { name: 'Via Publica', data: @registros.where(medio: 'via publica').group_by_year(:periodo).sum(:monto) }
           ] %>
-        </div>
-        <div class="col-lg-5">
-          <div class="page-header">
-            <h3>Porcentage por tipo de pauta</h3>
-          </div>
-          
-          <%= pie_chart @medios.group("medio").count %>
 
         </div>
+
       </div>
 
       <div class="row">
@@ -146,11 +141,30 @@
           </div>
           <ul class="list-group">
             
-            <% @medios.group('razon_social').sum(:monto, order: 'SUM(monto) DESC').first(10).each do |medio, monto| %>
+            <% @registros.group('razon_social').sum(:monto, order: 'SUM(monto) DESC').first(10).each do |medio, monto| %>
 
             <li class="list-group-item">
               <span class="badge badge-info"><%= number_to_currency monto.to_i, precision: 1, delimiter: '.', strip_insignificant_zeros: true %></span>
-              <a href="#"><%= medio %> <span class="label label-warning"><%= Medio.find_by_razon_social(medio).medio %></span></a>
+              <a href="#" data-toggle="modal" data-target="#<%= medio.parameterize %>"><%= medio %></a>
+
+              <!-- .modal -->
+              <div id="<%= medio.parameterize %>" class="modal fade">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal">&times;</button>
+                      <h4 class="modal-title"><%= medio %></h4>
+                    </div>
+                    <div class="modal-body">
+                      <h4>Evolucion del monto por año</h4>
+                      <%= line_chart [{ name: medio, data: @registros.where(razon_social: medio).group_by_year(:periodo).sum(:monto)  }] %>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                    </div>
+                  </div><!-- /.modal-content -->
+                </div><!-- /.modal-dialog -->
+              </div><!-- /.modal -->
             </li>
 
             <% end %>
@@ -162,8 +176,7 @@
           <div class="page-header">
             <h3>Porcentaje sobre el presupuesto total</h3>
           </div>
-          <%= pie_chart @medios.group('razon_social').sum(:monto, order: 'SUM(monto) DESC').first(10) %>
-
+          <%= pie_chart @registros.group('razon_social').sum(:monto, order: 'SUM(monto) DESC').first(10) %>
         </div>
       </div>
       
@@ -176,7 +189,8 @@
           </div>
           <div id="chart_div2" style="width:100%; height:400px;"></div>
         </div>
-      </div> -->
+      </div> 
+      -->
 
       <hr>
 
@@ -205,6 +219,9 @@
         startView: 1,
         minViewMode: 1,
         calendarWeeks: true
+      });
+      $('.modal').on('shown.bs.modal', function () {
+        $(window).trigger('resize');
       });
     </script>
   </body>

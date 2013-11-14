@@ -411,10 +411,17 @@
       waitForLoaded(function() {
         var options = jsOptions(series, opts);
         var data = createDataTable(series, "datetime");
+
         var chart = new google.visualization.LineChart(element);
+        var formatter = new google.visualization.NumberFormat( {prefix: '$'});
+
+        formatter.format(data, 1);
+
         resize( function() {
           chart.draw(data, options);
         });
+
+
       });
     };
 

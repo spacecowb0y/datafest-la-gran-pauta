@@ -12,7 +12,7 @@
 
 ActiveRecord::Schema.define(version: 20131102180650) do
 
-  create_table "medios", force: true do |t|
+  create_table "registros", force: true do |t|
     t.string "razon_social"
     t.date   "periodo"
     t.string "medio"

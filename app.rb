@@ -6,10 +6,13 @@ require 'action_view'
 
 include ActionView::Helpers::NumberHelper
 
-class Medio < ActiveRecord::Base
+class Registro < ActiveRecord::Base
 end
 
 get '/' do
-	@medios = (params[:desde].nil? && params[:hasta].nil?) ? Medio.all : Medio.where(periodo: params[:desde].to_date..params[:hasta].to_date)
+	@registros = (params[:desde].nil? && params[:hasta].nil?) ? Registro.all : Registro.where(periodo: params[:desde].to_date..params[:hasta].to_date)
 	erb :index
+end
+
+get '/entidades' do
 end
