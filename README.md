@@ -38,6 +38,6 @@ Equipo
 - Diego Tripodi
 - Elena Brizuela
 - Fernando Ruiz
-- Gerardo Gera
+- Gerardo Barretto
 - Jorge Lerche
 
